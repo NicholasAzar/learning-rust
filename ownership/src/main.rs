@@ -36,6 +36,16 @@ fn main() {
     let s3 = String::from("hello");
     let (s3, len) = calculate_length(s3);
     println!("The length of '{}' is {}.", s3, len);
+
+    let len = calculate_length_without_move(&s3);
+    println!("Length of '{}' is: {}", s3, len);
+
+    // Mutable References
+    // https://doc.rust-lang.org/book/second-edition/ch04-02-references-and-borrowing.html#mutable-references
+
+    let mut s = String::from("hello"); // Define a mutable String
+    change(&mut s);
+    println!("Changed s: {}", s);
 }
 
 
@@ -61,4 +71,13 @@ fn takes_and_gives_back(a_string: String) -> String {
 fn calculate_length(s: String) -> (String, usize) {
     let length = s.len();
     (s, length)
+}
+
+// Doesn't take ownership of parameter
+fn calculate_length_without_move(s: &String) -> usize { // s is a reference to a string
+    s.len()
+} // s goes out of scope, but since it doesn't have ownership of what it refers to, nothing happens.
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
 }
